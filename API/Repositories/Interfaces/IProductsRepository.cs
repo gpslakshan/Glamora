@@ -9,4 +9,6 @@ public interface IProductsRepository
     Task CreateProductAsync(Product product);
     Task UpdateProductAsync(Product product);
     Task DeleteProductAsync(Product product);
+    Task<IEnumerable<string>> GetBrandsAsync();
+    Task<IEnumerable<string>> GetTypesAsync();
 }

@@ -31,9 +31,25 @@ public class ProductsRepository : IProductsRepository
         return await _context.Products.ToListAsync();
     }
 
+    public async Task<IEnumerable<string>> GetBrandsAsync()
+    {
+        return await _context.Products
+            .Select(p => p.Brand)
+            .Distinct()
+            .ToListAsync();
+    }
+
     public async Task<Product?> GetProductByIdAsync(int id)
     {
         return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+    }
+
+    public async Task<IEnumerable<string>> GetTypesAsync()
+    {
+        return await _context.Products
+            .Select(p => p.Type)
+            .Distinct()
+            .ToListAsync();
     }
 
     public async Task UpdateProductAsync(Product product)

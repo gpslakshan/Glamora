@@ -97,6 +97,20 @@ public class ProductsController : ControllerBase
         return NoContent();
     }
 
+    [HttpGet("brands")]
+    public async Task<IActionResult> GetBrands()
+    {
+        var brands = await _productsRepository.GetBrandsAsync();
+        return Ok(brands);
+    }
+
+    [HttpGet("types")]
+    public async Task<IActionResult> GetTypes()
+    {
+        var types = await _productsRepository.GetTypesAsync();
+        return Ok(types);
+    }
+
     // Reusable method to map a single Product to ProductDto
     private ProductDto MapToProductDto(Product product)
     {
