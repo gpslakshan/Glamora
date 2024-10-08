@@ -9,11 +9,9 @@ public class GetAllProductsQueryDto
     public string? Type { get; set; }
     public string? Sort { get; set; }
 
-    [Required(ErrorMessage = "Page number is required.")]
     [Range(1, int.MaxValue, ErrorMessage = "Page number must be greater than 0.")]
     public int PageNumber { get; set; }
 
-    [Required(ErrorMessage = "Page size is required.")]
     [Range(1, int.MaxValue, ErrorMessage = "Page size must be greater than 0.")]
     [PageSizeValidation(ErrorMessage = "Page size must be 5, 10, 15, or 20.")]
     public int PageSize { get; set; }

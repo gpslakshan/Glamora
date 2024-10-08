@@ -20,11 +20,6 @@ public class ProductsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllProducts([FromQuery] GetAllProductsQueryDto queryDto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var (products, totalItemsCount) = await _productsRepository.GetAllProductsAsync(
             queryDto.SearchTerm,
             queryDto.Brand,
