@@ -1,4 +1,5 @@
 using API.Data;
+using API.Data.Seeders;
 using API.Repositories.Implementation;
 using API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +17,14 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<IAppDbSeeder, AppDbSeeder>();
 
 var app = builder.Build();
+
+// Seeding data
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<IAppDbSeeder>();
+await seeder.Seed();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
