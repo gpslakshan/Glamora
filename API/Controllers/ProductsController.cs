@@ -1,3 +1,4 @@
+using API.Helpers;
 using API.Models.Domain;
 using API.Models.Dtos;
 using API.Repositories.Interfaces;
@@ -17,10 +18,26 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllProducts()
+    public async Task<IActionResult> GetAllProducts([FromQuery] GetAllProductsQueryDto queryDto)
     {
-        var products = await _productsRepository.GetAllProductsAsync();
-        var response = MapToProductDto(products);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var (products, totalItemsCount) = await _productsRepository.GetAllProductsAsync(
+            queryDto.SearchTerm,
+            queryDto.Brand,
+            queryDto.Type,
+            queryDto.Sort,
+            queryDto.PageNumber,
+            queryDto.PageSize
+        );
+
+        var productDtos = MapToProductDto(products);
+
+        var response = new PagedResult<ProductDto>(productDtos, totalItemsCount, queryDto.PageSize, queryDto.PageNumber);
+
         return Ok(response);
     }
 
