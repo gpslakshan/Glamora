@@ -23,11 +23,11 @@ export class ShopService {
     params = params.append('pageSize', 10);
 
     if (brands && brands.length > 0) {
-      params = params.append('brand', brands[0]);
+      params = params.append('brand', brands.join(','));
     }
 
     if (types && types.length > 0) {
-      params = params.append('type', types[0]);
+      params = params.append('type', types.join(','));
     }
 
     return this.http.get<PagedResult<Product>>(`${this.baseUrl}/products`, {

@@ -4,8 +4,8 @@ namespace API.Repositories.Interfaces;
 
 public interface IProductsRepository
 {
-    Task<(IEnumerable<Product>, int)> GetAllProductsAsync(string? searchTerm, string? brand,
-        string? type, string? sort, int pageNumber, int pageSize);
+    Task<(IEnumerable<Product>, int)> GetAllProductsAsync(string? searchTerm, IEnumerable<string>? brands,
+        IEnumerable<string>? types, string? sort, int pageNumber, int pageSize);
 
     Task<Product?> GetProductByIdAsync(int id);
     Task CreateProductAsync(Product product);

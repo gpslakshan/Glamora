@@ -26,8 +26,8 @@ public class ProductsRepository : IProductsRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<(IEnumerable<Product>, int)> GetAllProductsAsync(string? searchTerm, string? brand,
-        string? type, string? sort, int pageNumber, int pageSize)
+    public async Task<(IEnumerable<Product>, int)> GetAllProductsAsync(string? searchTerm, IEnumerable<string>? brands,
+        IEnumerable<string>? types, string? sort, int pageNumber, int pageSize)
     {
         var query = _context.Products.AsQueryable();
 
@@ -38,14 +38,15 @@ public class ProductsRepository : IProductsRepository
         }
 
         // Filtering
-        if (!string.IsNullOrWhiteSpace(brand))
+        if (brands != null && brands.Any())
         {
-            query = query.Where(p => p.Brand == brand);
+            query = query.Where(p => brands.Contains(p.Brand));
         }
 
-        if (!string.IsNullOrWhiteSpace(type))
+        // Filtering by multiple types
+        if (types != null && types.Any())
         {
-            query = query.Where(p => p.Type == type);
+            query = query.Where(p => types.Contains(p.Type));
         }
 
         var totalItemsCount = await query.CountAsync(); // Taking the count after searching & filtering

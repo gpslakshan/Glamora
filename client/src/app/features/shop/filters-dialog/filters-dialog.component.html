@@ -4,7 +4,7 @@
   <div class="filters-content">
     <div class="filters-brands">
       <h4 class="filter-heading">Brands</h4>
-      <mat-selection-list [(ngModel)]="selectedBrands" [multiple]="false">
+      <mat-selection-list [(ngModel)]="selectedBrands" [multiple]="true">
         @for (brand of shopService.brands; track $index) {
         <mat-list-option [value]="brand">{{ brand }}</mat-list-option>
         }
@@ -13,7 +13,7 @@
 
     <div class="filters-types">
       <h4 class="filter-heading">Types</h4>
-      <mat-selection-list [(ngModel)]="selectedTypes" [multiple]="false">
+      <mat-selection-list [(ngModel)]="selectedTypes" [multiple]="true">
         @for (type of shopService.types; track $index) {
         <mat-list-option [value]="type">{{ type }}</mat-list-option>
         }

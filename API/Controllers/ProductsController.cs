@@ -22,8 +22,8 @@ public class ProductsController : ControllerBase
     {
         var (products, totalItemsCount) = await _productsRepository.GetAllProductsAsync(
             queryDto.SearchTerm,
-            queryDto.Brand,
-            queryDto.Type,
+            queryDto.Brand?.Split(',').Select(b => b.Trim()).ToList(),
+            queryDto.Type?.Split(',').Select(b => b.Trim()).ToList(),
             queryDto.Sort,
             queryDto.PageNumber,
             queryDto.PageSize
