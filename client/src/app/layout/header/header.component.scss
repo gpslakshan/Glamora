@@ -1,0 +1,54 @@
+.header {
+  border-bottom: 1px solid #e5e7eb; // equivalent to tailwind's border-b
+  padding: 0.75rem; // equivalent to tailwind's p-3
+  width: 100%;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1536px; // tailwind's max-w-screen-2xl
+    margin: 0 auto;
+  }
+
+  .logo {
+    max-height: 4rem; // equivalent to tailwind's mx-h-16
+  }
+
+  .nav {
+    display: flex;
+    gap: 0.75rem; // equivalent to tailwind's gap-3
+    margin: 0.5rem 0; // equivalent to tailwind's my-2
+    text-transform: uppercase; // equivalent to tailwind's uppercase
+    font-size: 1.25rem; // equivalent to tailwind's text-xl
+
+    a {
+      text-decoration: none;
+      color: inherit; // ensure text color inheritance
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.75rem; // equivalent to tailwind's gap-3
+    align-items: center;
+
+    .cart {
+      margin-top: 0.5rem; // equivalent to tailwind's mt-2
+      margin-right: 0.5rem; // equivalent to tailwind's mr-2
+
+      .mat-badge-content {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        line-height: 20px;
+      }
+
+      .mat-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+    }
+  }
+}
