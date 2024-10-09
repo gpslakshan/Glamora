@@ -1,0 +1,33 @@
+.filters-dialog {
+  .filters-title {
+    font-size: 1.875rem; // equivalent to Tailwind's text-3xl (30px)
+    text-align: center;
+    padding-top: 1.5rem; // equivalent to Tailwind's pt-6
+    margin-bottom: 0.75rem; // equivalent to Tailwind's mb-3
+  }
+
+  .filters-content {
+    display: flex;
+    padding: 1rem; // equivalent to Tailwind's p-4
+    gap: 1rem; // spacing between the two sections
+
+    .filters-brands,
+    .filters-types {
+      width: 50%; // equivalent to Tailwind's w-1/2
+    }
+
+    .filter-heading {
+      font-size: 1.25rem; // equivalent to Tailwind's text-xl (20px)
+      font-weight: 600; // equivalent to Tailwind's font-semibold
+      color: var(
+        --primary-color
+      ); // equivalent to Tailwind's text-primary (assuming it's a CSS variable or set color)
+    }
+  }
+
+  .filters-actions {
+    display: flex;
+    justify-content: flex-end; // equivalent to Tailwind's justify-end
+    padding: 1rem; // equivalent to Tailwind's p-4
+  }
+}

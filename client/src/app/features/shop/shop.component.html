@@ -1,0 +1,13 @@
+<div class="shop-container">
+  <div class="filters-container">
+    <button mat-stroked-button (click)="openFiltersDialog()">
+      <mat-icon>filter_list</mat-icon>
+      Filters
+    </button>
+  </div>
+  <div class="product-grid">
+    @for (product of products; track product.id) {
+    <app-product-item [product]="product" />
+    }
+  </div>
+</div>

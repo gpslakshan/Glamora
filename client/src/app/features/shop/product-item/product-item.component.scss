@@ -1,0 +1,29 @@
+mat-card {
+  overflow: hidden;
+
+  .product-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .product-details {
+    margin-top: 0.5rem; // equivalent to Tailwind's mt-2
+  }
+
+  .product-name {
+    font-size: 0.875rem; // equivalent to Tailwind's text-sm (14px)
+    font-weight: 600; // equivalent to Tailwind's font-semibold
+    text-transform: uppercase; // equivalent to Tailwind's uppercase
+  }
+
+  .product-price {
+    font-weight: 300; // equivalent to Tailwind's font-light
+  }
+
+  .add-to-cart-button {
+    width: 100%; // equivalent to Tailwind's w-full
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

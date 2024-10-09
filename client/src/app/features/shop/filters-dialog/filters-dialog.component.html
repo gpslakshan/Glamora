@@ -1,0 +1,27 @@
+<div class="filters-dialog">
+  <h3 class="filters-title">Filters</h3>
+  <mat-divider />
+  <div class="filters-content">
+    <div class="filters-brands">
+      <h4 class="filter-heading">Brands</h4>
+      <mat-selection-list [(ngModel)]="selectedBrands" [multiple]="false">
+        @for (brand of shopService.brands; track $index) {
+        <mat-list-option [value]="brand">{{ brand }}</mat-list-option>
+        }
+      </mat-selection-list>
+    </div>
+
+    <div class="filters-types">
+      <h4 class="filter-heading">Types</h4>
+      <mat-selection-list [(ngModel)]="selectedTypes" [multiple]="false">
+        @for (type of shopService.types; track $index) {
+        <mat-list-option [value]="type">{{ type }}</mat-list-option>
+        }
+      </mat-selection-list>
+    </div>
+  </div>
+
+  <div class="filters-actions">
+    <button mat-flat-button (click)="applyFilters()">Apply Filters</button>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+.shop-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; // equivalent to Tailwind's gap-3 (12px gap between flex items)
+}
+
+.filters-container {
+  display: flex;
+  justify-content: flex-end; // equivalent to Tailwind's justify-end
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); // equivalent to Tailwind's grid-cols-5
+  gap: 1rem; // equivalent to Tailwind's gap-4 (1rem or 16px gap between items)
+}
