@@ -2,12 +2,15 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ShopService } from '../../core/services/shop.service';
 import { Product } from '../../shared/models/product';
 import { ProductItemComponent } from './product-item/product-item.component';
+import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';
+import { ShopParams } from '../../shared/models/shop-params';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule, MatSelectionListChange } from '@angular/material/list';
-import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { PagedResult } from '../../shared/models/paged-result';
 
 @Component({
   selector: 'app-shop',
@@ -18,6 +21,7 @@ import { FiltersDialogComponent } from './filters-dialog/filters-dialog.componen
     MatIconModule,
     MatMenuModule,
     MatListModule,
+    MatPaginatorModule,
   ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss',
@@ -26,14 +30,13 @@ export class ShopComponent implements OnInit {
   private shopService = inject(ShopService);
   private dialogService = inject(MatDialog);
   title = 'Glamora';
-  products: Product[] = [];
-  selectedBrands: string[] = [];
-  selectedTypes: string[] = [];
-  selectedSort?: string;
+  getProductsResponse?: PagedResult<Product>;
   sortOptions = [
     { name: 'Price: Low-High', value: 'priceAsc' },
     { name: 'Price: High-Low', value: 'priceDesc' },
   ];
+  pageSizeOptions = [5, 10, 15, 20];
+  shopParams = new ShopParams();
 
   ngOnInit(): void {
     this.initializeShop();
@@ -46,24 +49,22 @@ export class ShopComponent implements OnInit {
   }
 
   getProducts() {
-    this.shopService
-      .getProducts(this.selectedBrands, this.selectedTypes, this.selectedSort)
-      .subscribe({
-        next: (res) => {
-          this.products = res.items;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+    this.shopService.getProducts(this.shopParams).subscribe({
+      next: (res) => {
+        this.getProductsResponse = res;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   openFiltersDialog(): void {
     const dialogRef = this.dialogService.open(FiltersDialogComponent, {
       minWidth: '500px',
       data: {
-        selectedBrands: this.selectedBrands,
-        selectedTypes: this.selectedTypes,
+        selectedBrands: this.shopParams.brands,
+        selectedTypes: this.shopParams.types,
       },
     });
 
@@ -71,8 +72,9 @@ export class ShopComponent implements OnInit {
       next: (result) => {
         if (result) {
           console.log(result);
-          this.selectedBrands = result.selectedBrands;
-          this.selectedTypes = result.selectedTypes;
+          this.shopParams.brands = result.selectedBrands;
+          this.shopParams.types = result.selectedTypes;
+          this.shopParams.pageNumber = 1;
           this.getProducts();
         }
       },
@@ -83,8 +85,16 @@ export class ShopComponent implements OnInit {
     const selectedOption = event.options[0];
 
     if (selectedOption) {
-      this.selectedSort = selectedOption.value;
+      this.shopParams.sort = selectedOption.value;
+      this.shopParams.pageNumber = 1;
       this.getProducts();
     }
+  }
+
+  handlePageEvent(event: PageEvent) {
+    console.log('handlePageEvent');
+    this.shopParams.pageNumber = event.pageIndex + 1;
+    this.shopParams.pageSize = event.pageSize;
+    this.getProducts();
   }
 }

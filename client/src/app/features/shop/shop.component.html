@@ -1,17 +1,31 @@
 <div class="shop-container">
   <div class="filters-container">
-    <button mat-stroked-button (click)="openFiltersDialog()">
-      <mat-icon>filter_list</mat-icon>
-      Filters
-    </button>
-    <button mat-stroked-button [mat-menu-trigger-for]="sortMenu">
-      <mat-icon>swap_vert</mat-icon>
-      Sort
-    </button>
+    <mat-paginator
+      class="bg-white"
+      (page)="handlePageEvent($event)"
+      [length]="getProductsResponse?.totalItemsCount"
+      [pageSize]="shopParams.pageSize"
+      [showFirstLastButtons]="true"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="shopParams.pageNumber - 1"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+
+    <div class="filters-buttons">
+      <button mat-stroked-button (click)="openFiltersDialog()">
+        <mat-icon>filter_list</mat-icon>
+        Filters
+      </button>
+      <button mat-stroked-button [mat-menu-trigger-for]="sortMenu">
+        <mat-icon>swap_vert</mat-icon>
+        Sort
+      </button>
+    </div>
   </div>
 
   <div class="product-grid">
-    @for (product of products; track product.id) {
+    @for (product of getProductsResponse?.items; track product.id) {
     <app-product-item [product]="product" />
     }
   </div>
@@ -25,7 +39,7 @@
     @for (sort of sortOptions; track $index) {
     <mat-list-option
       [value]="sort.value"
-      [selected]="selectedSort === sort.value"
+      [selected]="shopParams.sort === sort.value"
       >{{ sort.name }}</mat-list-option
     >
     }

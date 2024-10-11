@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { PagedResult } from '../../shared/models/paged-result';
 import { Product } from '../../shared/models/product';
 import { Observable } from 'rxjs';
+import { ShopParams } from '../../shared/models/shop-params';
 
 @Injectable({
   providedIn: 'root',
@@ -13,27 +14,23 @@ export class ShopService {
   brands: string[] = [];
   types: string[] = [];
 
-  getProducts(
-    brands?: string[],
-    types?: string[],
-    sort?: string
-  ): Observable<PagedResult<Product>> {
+  getProducts(shopParams: ShopParams): Observable<PagedResult<Product>> {
     let params = new HttpParams();
 
-    params = params.append('pageNumber', 1);
-    params = params.append('pageSize', 10);
-
-    if (brands && brands.length > 0) {
-      params = params.append('brand', brands.join(','));
+    if (shopParams.brands.length > 0) {
+      params = params.append('brand', shopParams.brands.join(','));
     }
 
-    if (types && types.length > 0) {
-      params = params.append('type', types.join(','));
+    if (shopParams.types.length > 0) {
+      params = params.append('type', shopParams.types.join(','));
     }
 
-    if (sort) {
-      params = params.append('sort', sort);
+    if (shopParams.sort) {
+      params = params.append('sort', shopParams.sort);
     }
+
+    params = params.append('pageNumber', shopParams.pageNumber);
+    params = params.append('pageSize', shopParams.pageSize);
 
     return this.http.get<PagedResult<Product>>(`${this.baseUrl}/products`, {
       params,
