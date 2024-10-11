@@ -17,6 +17,10 @@ export class ShopService {
   getProducts(shopParams: ShopParams): Observable<PagedResult<Product>> {
     let params = new HttpParams();
 
+    if (shopParams.searchTerm) {
+      params = params.append('searchTerm', shopParams.searchTerm);
+    }
+
     if (shopParams.brands.length > 0) {
       params = params.append('brand', shopParams.brands.join(','));
     }

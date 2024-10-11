@@ -2,15 +2,42 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem; // equivalent to Tailwind's gap-3 (12px gap between flex items)
+}
 
-  .filters-container {
+.filters-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .search-form {
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 28rem; // equivalent to Tailwind's max-w-md
+    margin: 0 1rem; // equivalent to Tailwind's mx-4
+  }
 
-    .filters-buttons {
-      display: flex;
-      gap: 0.75rem; // equivalent to Tailwind's gap-3
-    }
+  .search-input {
+    width: 100%;
+    padding: 1rem; // equivalent to Tailwind's p-4
+    font-size: 0.875rem; // equivalent to Tailwind's text-sm
+    color: #1f2937; // equivalent to Tailwind's text-gray-900
+    border: 1px solid #d1d5db; // equivalent to Tailwind's border-gray-300
+    border-radius: 0.5rem; // equivalent to Tailwind's rounded-lg
+  }
+
+  .search-button {
+    position: absolute;
+    right: 2rem; // equivalent to Tailwind's right-8
+    top: 0.5rem; // equivalent to Tailwind's top-2
+    display: flex;
+    align-items: center;
+  }
+
+  .filters-buttons {
+    display: flex;
+    gap: 0.75rem; // equivalent to Tailwind's gap-3
   }
 }
 

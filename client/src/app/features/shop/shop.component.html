@@ -12,6 +12,23 @@
     >
     </mat-paginator>
 
+    <form
+      #searchForm="ngForm"
+      (ngSubmit)="onSearchChange()"
+      class="search-form"
+    >
+      <input
+        type="search"
+        name="searchTerm"
+        placeholder="Search"
+        class="search-input"
+        [(ngModel)]="shopParams.searchTerm"
+      />
+      <button mat-icon-button type="submit" class="search-button">
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+
     <div class="filters-buttons">
       <button mat-stroked-button (click)="openFiltersDialog()">
         <mat-icon>filter_list</mat-icon>
