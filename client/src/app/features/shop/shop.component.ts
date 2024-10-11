@@ -4,13 +4,21 @@ import { Product } from '../../shared/models/product';
 import { ProductItemComponent } from './product-item/product-item.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule, MatSelectionListChange } from '@angular/material/list';
+import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [ProductItemComponent, MatButtonModule, MatIconModule],
+  imports: [
+    ProductItemComponent,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatListModule,
+  ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss',
 })
@@ -21,6 +29,11 @@ export class ShopComponent implements OnInit {
   products: Product[] = [];
   selectedBrands: string[] = [];
   selectedTypes: string[] = [];
+  selectedSort?: string;
+  sortOptions = [
+    { name: 'Price: Low-High', value: 'priceAsc' },
+    { name: 'Price: High-Low', value: 'priceDesc' },
+  ];
 
   ngOnInit(): void {
     this.initializeShop();
@@ -29,14 +42,20 @@ export class ShopComponent implements OnInit {
   initializeShop() {
     this.shopService.getBrands();
     this.shopService.getTypes();
-    this.shopService.getProducts().subscribe({
-      next: (res) => {
-        this.products = res.items;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.getProducts();
+  }
+
+  getProducts() {
+    this.shopService
+      .getProducts(this.selectedBrands, this.selectedTypes, this.selectedSort)
+      .subscribe({
+        next: (res) => {
+          this.products = res.items;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   openFiltersDialog(): void {
@@ -54,19 +73,18 @@ export class ShopComponent implements OnInit {
           console.log(result);
           this.selectedBrands = result.selectedBrands;
           this.selectedTypes = result.selectedTypes;
-
-          this.shopService
-            .getProducts(this.selectedBrands, this.selectedTypes)
-            .subscribe({
-              next: (res) => {
-                this.products = res.items;
-              },
-              error: (err) => {
-                console.log(err);
-              },
-            });
+          this.getProducts();
         }
       },
     });
+  }
+
+  onSortChange(event: MatSelectionListChange) {
+    const selectedOption = event.options[0];
+
+    if (selectedOption) {
+      this.selectedSort = selectedOption.value;
+      this.getProducts();
+    }
   }
 }

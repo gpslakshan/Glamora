@@ -7,6 +7,7 @@
 .filters-container {
   display: flex;
   justify-content: flex-end; // equivalent to Tailwind's justify-end
+  gap: 0.75rem; //12px
 }
 
 .product-grid {

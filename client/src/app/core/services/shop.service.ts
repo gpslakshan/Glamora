@@ -15,7 +15,8 @@ export class ShopService {
 
   getProducts(
     brands?: string[],
-    types?: string[]
+    types?: string[],
+    sort?: string
   ): Observable<PagedResult<Product>> {
     let params = new HttpParams();
 
@@ -28,6 +29,10 @@ export class ShopService {
 
     if (types && types.length > 0) {
       params = params.append('type', types.join(','));
+    }
+
+    if (sort) {
+      params = params.append('sort', sort);
     }
 
     return this.http.get<PagedResult<Product>>(`${this.baseUrl}/products`, {
