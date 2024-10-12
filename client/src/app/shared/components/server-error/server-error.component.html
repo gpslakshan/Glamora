@@ -1,0 +1,21 @@
+<div class="container mt-5 p-4 bg-gray-100 rounded shadow-lg">
+  <h1 class="error-title">500: Internal Server Error</h1>
+  @if (error) {
+  <h5 class="error-message">Error: {{ error.message }}</h5>
+  <p class="error-description">This error comes from the server. Not client.</p>
+  <p class="next-steps-title">What to do next?</p>
+  <ol class="next-steps-list">
+    <li class="mb-1">Check the network tab in Chrome Dev Tools</li>
+    <li class="mb-1">
+      Reproduce the error in Postman. If same error, don't waste time
+      troubleshooting client-side code.
+    </li>
+  </ol>
+  <h5 class="stack-trace-title">Stack Trace</h5>
+  <mat-card class="stack-trace-card">
+    <code class="stack-trace-details">
+      {{ error.details }}
+    </code>
+  </mat-card>
+  }
+</div>

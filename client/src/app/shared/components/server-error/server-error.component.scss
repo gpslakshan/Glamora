@@ -1,0 +1,41 @@
+.error-title {
+  font-size: 1.5rem; // equivalent to Tailwind's text-2xl
+  font-weight: 600; // equivalent to Tailwind's font-semibold
+  margin-bottom: 1rem; // equivalent to Tailwind's mb-4
+}
+
+.error-message {
+  color: #dc2626; // equivalent to Tailwind's text-red-600
+}
+
+.error-description,
+.next-steps-title {
+  font-weight: 700; // equivalent to Tailwind's font-bold
+  margin-bottom: 0.5rem; // equivalent to Tailwind's mb-2
+}
+
+.next-steps-list {
+  list-style-type: decimal; // equivalent to Tailwind's list-decimal
+  margin-left: 1.25rem; // equivalent to Tailwind's ml-5
+  margin-bottom: 1rem; // equivalent to Tailwind's mb-4
+
+  li {
+    margin-bottom: 0.25rem; // equivalent to Tailwind's mb-1
+  }
+}
+
+.stack-trace-title {
+  font-size: 1.125rem; // equivalent to Tailwind's text-lg
+  font-weight: 600; // equivalent to Tailwind's font-semibold
+  margin-bottom: 0.5rem; // equivalent to Tailwind's mb-2
+}
+
+.stack-trace-card {
+  padding: 1rem !important; // equivalent to Tailwind's p-4
+  background-color: #ffffff !important; // equivalent to Tailwind's bg-white
+}
+
+.stack-trace-details {
+  display: block;
+  white-space: pre-wrap; // equivalent to Tailwind's block and whitespace-pre-wrap
+}
