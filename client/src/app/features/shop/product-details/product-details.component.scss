@@ -1,0 +1,79 @@
+.product-details-section {
+  padding: 2rem 0; // equivalent to Tailwind's py-8
+}
+
+.product-details-container {
+  max-width: 1536px; // equivalent to Tailwind's max-w-screen-2xl
+  padding: 0 1rem; // equivalent to Tailwind's px-4
+  margin: 0 auto;
+}
+
+.product-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; // equivalent to Tailwind's grid-cols-2
+  gap: 2rem; // equivalent to Tailwind's gap-8
+}
+
+.product-image-container {
+  max-width: 36rem; // equivalent to Tailwind's max-w-xl
+  margin: 0 auto;
+
+  .product-image {
+    width: 100%; // equivalent to Tailwind's w-full
+    height: auto;
+  }
+}
+
+.product-info {
+  .product-title {
+    font-size: 1.5rem; // equivalent to Tailwind's text-2xl
+    font-weight: 600; // equivalent to Tailwind's font-semibold
+    color: #1f2937; // equivalent to Tailwind's text-gray-900
+  }
+
+  .product-price-container {
+    margin-top: 1rem; // equivalent to Tailwind's mt-4
+    display: flex;
+    align-items: center;
+    gap: 1rem; // equivalent to Tailwind's gap-4
+
+    .product-price {
+      font-size: 1.875rem; // equivalent to Tailwind's text-3xl
+      font-weight: 800; // equivalent to Tailwind's font-extrabold
+      color: #1f2937; // equivalent to Tailwind's text-gray-900
+    }
+  }
+
+  .product-actions {
+    display: flex;
+    gap: 1rem; // equivalent to Tailwind's gap-4
+    margin-top: 1.5rem; // equivalent to Tailwind's mt-6
+
+    .quantity-input {
+      display: flex;
+    }
+  }
+
+  .product-description {
+    margin-top: 1.5rem; // equivalent to Tailwind's mt-6
+    color: #6b7280; // equivalent to Tailwind's text-gray-500
+  }
+
+  .product-specifications {
+    margin-top: 2.5rem; // equivalent to Tailwind's mt-10
+    width: 100%;
+
+    tr {
+      border-bottom: 1px solid #d1d5db; // equivalent to Tailwind's border-b
+
+      .spec-label {
+        padding: 1.5rem; // equivalent to Tailwind's px-6 py-4
+        font-weight: bold;
+      }
+
+      .spec-value {
+        padding: 1.5rem; // equivalent to Tailwind's px-6 py-4
+      }
+    }
+  }
+}
