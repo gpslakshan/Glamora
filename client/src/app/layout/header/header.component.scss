@@ -13,6 +13,7 @@
 
   .logo {
     max-height: 4rem; // equivalent to tailwind's mx-h-16
+    cursor: pointer;
   }
 
   .nav {
@@ -25,6 +26,10 @@
     a {
       text-decoration: none;
       color: inherit; // ensure text color inheritance
+
+      &.active {
+        color: #1d4ed8;
+      }
     }
   }
 

@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-primary {
+  color: #1d4ed8;
+}
+
+button.match-input-height {
+  height: var(--mat-form-field-container-height) !important;
+}
+
+.mdc-notched-outline__notch {
+  border-right-style: none !important;
+}

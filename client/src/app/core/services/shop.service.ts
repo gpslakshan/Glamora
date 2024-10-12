@@ -64,4 +64,8 @@ export class ShopService {
       },
     });
   }
+
+  getProductById(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.baseUrl}/products/${id}`);
+  }
 }

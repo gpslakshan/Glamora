@@ -1,11 +1,14 @@
-<mat-card appearance="raised">
+<mat-card appearance="raised" class="product-card">
   <img
     [src]="product.pictureUrl"
     alt="Image of {{ product.name }}"
     class="product-image"
+    routerLink="/shop/{{ product.id }}"
   />
   <mat-card-content class="product-details">
-    <h2 class="product-name">{{ product.name }}</h2>
+    <h2 class="product-name" routerLink="/shop/{{ product.id }}">
+      {{ product.name }}
+    </h2>
     <p class="product-price">{{ product.price | currency }}</p>
   </mat-card-content>
   <mat-card-actions>
