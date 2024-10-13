@@ -27,14 +27,14 @@
     margin: 0.5rem 0; // equivalent to tailwind's my-2
     text-transform: uppercase; // equivalent to tailwind's uppercase
     font-size: 1.25rem; // equivalent to tailwind's text-xl
+  }
 
-    a {
-      text-decoration: none;
-      color: inherit; // ensure text color inheritance
+  a {
+    text-decoration: none;
+    color: inherit; // ensure text color inheritance
 
-      &.active {
-        color: #1d4ed8;
-      }
+    &.active {
+      color: #005cbb;
     }
   }
 

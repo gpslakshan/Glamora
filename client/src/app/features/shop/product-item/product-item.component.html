@@ -12,7 +12,11 @@
     <p class="product-price">{{ product.price | currency }}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button class="add-to-cart-button">
+    <button
+      mat-stroked-button
+      class="add-to-cart-button"
+      (click)="cartService.addItemToCart(product)"
+    >
       <mat-icon>add_shopping_cart</mat-icon>
       Add to cart
     </button>

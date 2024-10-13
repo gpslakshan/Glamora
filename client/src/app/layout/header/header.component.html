@@ -12,7 +12,13 @@
       <a routerLink="/test-error" routerLinkActive="active">Errors</a>
     </nav>
     <div class="actions">
-      <a matBadge="5" matBadgeSize="large" class="cart">
+      <a
+        routerLink="/cart"
+        routerLinkActive="active"
+        [matBadge]="cartService.itemCount()"
+        matBadgeSize="large"
+        class="cart"
+      >
         <mat-icon>shopping_cart</mat-icon>
       </a>
       <button mat-stroked-button>Login</button>
