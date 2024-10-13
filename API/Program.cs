@@ -4,6 +4,7 @@ using API.Middlewares;
 using API.Repositories.Implementation;
 using API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,12 @@ builder.Services.AddCors(options =>
               .AllowCredentials()
               .WithOrigins("http://localhost:4200", "https://localhost:4200");
     });
+});
+builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("Redis") ?? throw new Exception("Failed to get Redis connection string");
+    var configuration = ConfigurationOptions.Parse(connectionString, true);
+    return ConnectionMultiplexer.Connect(configuration);
 });
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 builder.Services.AddScoped<IAppDbSeeder, AppDbSeeder>();
