@@ -3,6 +3,8 @@ using API.Data.Seeders;
 using API.Middlewares;
 using API.Repositories.Implementation;
 using API.Repositories.Interfaces;
+using API.Services.Implementation;
+using API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
@@ -35,6 +37,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
     return ConnectionMultiplexer.Connect(configuration);
 });
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddScoped<IAppDbSeeder, AppDbSeeder>();
 
 var app = builder.Build();
