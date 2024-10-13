@@ -1,4 +1,4 @@
-<header class="header shadow-md">
+<header class="header shadow-md bg-white">
   <div class="container">
     <img routerLink="/" src="images/logo.svg" alt="app logo" class="logo" />
     <nav class="nav">
@@ -22,5 +22,5 @@
 </header>
 
 @if (busyService.isLoading) {
-<mat-progress-bar mode="indeterminate" />
+<mat-progress-bar mode="indeterminate" class="progress-bar" />
 }

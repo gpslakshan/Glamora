@@ -2,11 +2,16 @@
   border-bottom: 1px solid #e5e7eb; // equivalent to tailwind's border-b
   padding: 0.75rem; // equivalent to tailwind's p-3
   width: 100%;
+  max-height: 5rem !important; // 80px
+  position: fixed;
+  top: 0px;
+  z-index: 50;
 
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    vertical-align: middle;
     max-width: 1536px; // tailwind's max-w-screen-2xl
     margin: 0 auto;
   }
@@ -56,4 +61,10 @@
       }
     }
   }
+}
+
+.progress-bar {
+  position: fixed;
+  top: 70px;
+  z-index: 50;
 }
