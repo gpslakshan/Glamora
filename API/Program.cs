@@ -1,6 +1,7 @@
 using API.Data;
 using API.Data.Seeders;
 using API.Middlewares;
+using API.Models.Domain;
 using API.Repositories.Implementation;
 using API.Repositories.Interfaces;
 using API.Services.Implementation;
@@ -36,6 +37,8 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
     var configuration = ConfigurationOptions.Parse(connectionString, true);
     return ConnectionMultiplexer.Connect(configuration);
 });
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddScoped<IAppDbSeeder, AppDbSeeder>();
@@ -66,5 +69,7 @@ app.UseCors("MyCors");
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapIdentityApi<AppUser>();
 
 app.Run();

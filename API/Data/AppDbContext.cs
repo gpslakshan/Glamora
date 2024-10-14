@@ -1,15 +1,12 @@
 using API.Data.Configuration;
 using API.Models.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext(DbContextOptions options) : IdentityDbContext<AppUser>(options)
 {
-    public AppDbContext(DbContextOptions options) : base(options)
-    {
-    }
-
     public DbSet<Product> Products { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
