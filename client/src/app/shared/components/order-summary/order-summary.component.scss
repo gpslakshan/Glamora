@@ -1,0 +1,99 @@
+.order-summary-container {
+  max-width: 64rem; // equivalent to Tailwind's max-w-4xl
+  margin: 0 auto;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; // equivalent to Tailwind's space-y-6
+
+  .order-summary-box,
+  .voucher-box {
+    background-color: #ffffff; // Tailwind's bg-white
+    border: 1px solid #e5e7eb; // Tailwind's border-gray-200
+    padding: 1rem; // Tailwind's p-4 for order summary box
+    border-radius: 0.5rem; // Tailwind's rounded-lg
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // Tailwind's shadow-sm
+
+    .order-summary-title {
+      font-size: 1.25rem; // Tailwind's text-xl
+      font-weight: 600; // Tailwind's font-semibold
+      margin-bottom: 1rem;
+    }
+
+    .order-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem; // Tailwind's space-y-4
+
+      .order-breakdown {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem; // Tailwind's space-y-2
+
+        .summary-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1rem; // Tailwind's gap-4
+
+          .label {
+            font-weight: 500; // Tailwind's font-medium
+            color: #6b7280; // Tailwind's text-gray-500
+          }
+
+          .value {
+            font-weight: 500; // Tailwind's font-medium
+            color: #111827; // Tailwind's text-gray-900
+          }
+
+          .discount {
+            font-weight: 500; // Tailwind's font-medium
+            color: #16a34a; // Tailwind's text-green-500
+          }
+        }
+      }
+
+      .summary-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem; // Tailwind's gap-4
+        border-top: 1px solid #e5e7eb; // Tailwind's border-t border-gray-200
+        padding-top: 0.5rem; // Tailwind's pt-2
+
+        .label {
+          font-weight: 500; // Tailwind's font-medium
+          color: #6b7280; // Tailwind's text-gray-500
+        }
+
+        .value {
+          font-weight: 500; // Tailwind's font-medium
+          color: #111827; // Tailwind's text-gray-900
+        }
+      }
+    }
+
+    .order-actions {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem; // Tailwind's gap-2
+    }
+  }
+
+  .voucher-box {
+    .voucher-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem; // Tailwind's space-y-2
+      padding: 0.5rem; // Tailwind's p-2
+
+      .voucher-label {
+        margin-bottom: 0.5rem; // Tailwind's mb-2
+        font-size: 0.875rem; // Tailwind's text-sm
+        font-weight: 500; // Tailwind's font-medium
+      }
+    }
+  }
+}

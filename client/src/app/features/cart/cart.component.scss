@@ -1,0 +1,19 @@
+.cart-container {
+  margin: 0 auto;
+  max-width: 1280px; // equivalent to Tailwind's max-w-screen-xl
+}
+
+.cart-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem; // equivalent to Tailwind's gap-6
+  margin-top: 3rem; // equivalent to Tailwind's mt-12
+}
+
+.cart-items {
+  width: 75%; // equivalent to Tailwind's w-3/4
+}
+
+.order-summary {
+  width: 25%; // equivalent to Tailwind's w-1/4
+}

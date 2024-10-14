@@ -1,1 +1,14 @@
-<p>cart works!</p>
+<section class="cart-section">
+  <div class="cart-container">
+    <div class="cart-content">
+      <div class="cart-items">
+        @for (item of cartService.cart()?.items; track item.productId) {
+        <app-cart-item [item]="item" />
+        }
+      </div>
+      <div class="order-summary">
+        <app-order-summary />
+      </div>
+    </div>
+  </div>
+</section>

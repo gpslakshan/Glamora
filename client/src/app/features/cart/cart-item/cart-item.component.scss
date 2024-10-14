@@ -1,0 +1,86 @@
+.cart-item {
+  border-radius: 0.5rem; // equivalent to Tailwind's rounded-lg
+  border: 1px solid #e5e7eb; // equivalent to Tailwind's border-gray-200
+  background-color: #ffffff; // equivalent to Tailwind's bg-white
+  padding: 1rem; // equivalent to Tailwind's p-4
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // equivalent to Tailwind's shadow-sm
+  margin-bottom: 1rem; // equivalent to Tailwind's mb-4
+
+  .cart-item-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem; // equivalent to Tailwind's gap-6
+  }
+
+  .cart-item-image {
+    order: 1;
+    flex-shrink: 0;
+
+    img {
+      height: 5rem; // equivalent to Tailwind's h-20
+      width: 5rem; // equivalent to Tailwind's w-20
+    }
+  }
+
+  .cart-item-quantity-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    order: 3;
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem; // equivalent to Tailwind's gap-3
+
+      .decrement-icon {
+        color: #dc2626; // equivalent to Tailwind's text-red-600
+      }
+
+      .item-quantity {
+        font-weight: 600; // equivalent to Tailwind's font-semibold
+        font-size: 1.25rem; // equivalent to Tailwind's text-xl
+        margin-bottom: 0.25rem; // equivalent to Tailwind's mb-1
+      }
+
+      .increment-icon {
+        color: #16a34a; // equivalent to Tailwind's text-green-600
+      }
+    }
+
+    .item-price {
+      text-align: right;
+      order: 4;
+      width: 8rem; // equivalent to Tailwind's w-32
+
+      p {
+        font-weight: bold;
+        font-size: 1.25rem; // equivalent to Tailwind's text-xl
+      }
+    }
+  }
+
+  .cart-item-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    order: 2;
+    max-width: 28rem; // equivalent to Tailwind's max-w-md
+    gap: 1rem; // equivalent to Tailwind's space-y-4
+
+    .product-name {
+      font-weight: 500; // equivalent to Tailwind's font-medium
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem; // equivalent to Tailwind's gap-4
+
+      button {
+        color: #ef4444; // matching Tailwind's text-red color for the delete button
+      }
+    }
+  }
+}
