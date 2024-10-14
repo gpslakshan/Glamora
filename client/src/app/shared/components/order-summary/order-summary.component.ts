@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { CartService } from '../../../core/services/cart.service';
 import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-order-summary',
@@ -15,6 +16,7 @@ import { CurrencyPipe } from '@angular/common';
     MatInputModule,
     MatIconModule,
     CurrencyPipe,
+    RouterLink,
   ],
   templateUrl: './order-summary.component.html',
   styleUrl: './order-summary.component.scss',
