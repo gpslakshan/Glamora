@@ -8,11 +8,23 @@ namespace API.Extensions;
 
 public static class ClaimsPrincipleExtensions
 {
-    public static async Task<AppUser> GetUserByEmail(this UserManager<AppUser> userManager,
+    public static async Task<AppUser> GetUserByClaimsPrinciple(this UserManager<AppUser> userManager,
         ClaimsPrincipal user)
     {
         var userToReturn = await userManager.Users.FirstOrDefaultAsync(x =>
             x.Email == user.GetEmail());
+
+        if (userToReturn == null) throw new AuthenticationException("User not found");
+
+        return userToReturn;
+    }
+
+    public static async Task<AppUser> GetUserByClaimsPrincipleWithAddress(this UserManager<AppUser> userManager,
+        ClaimsPrincipal user)
+    {
+        var userToReturn = await userManager.Users
+            .Include(x => x.Address)
+            .FirstOrDefaultAsync(x => x.Email == user.GetEmail());
 
         if (userToReturn == null) throw new AuthenticationException("User not found");
 

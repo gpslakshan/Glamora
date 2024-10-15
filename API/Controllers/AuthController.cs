@@ -51,13 +51,14 @@ namespace API.Controllers
         {
             if (User.Identity?.IsAuthenticated == false) return NoContent();
 
-            var user = await signInManager.UserManager.GetUserByEmail(User);
+            var user = await signInManager.UserManager.GetUserByClaimsPrincipleWithAddress(User);
 
             return Ok(new
             {
                 user.FirstName,
                 user.LastName,
-                user.Email
+                user.Email,
+                Address = user.Address?.ToDto()
             });
         }
 
@@ -65,6 +66,28 @@ namespace API.Controllers
         public IActionResult GetAuthState()
         {
             return Ok(new { IsAuthenticated = User.Identity?.IsAuthenticated ?? false });
+        }
+
+        [Authorize]
+        [HttpPost("address")]
+        public async Task<ActionResult<Address>> CreateOrUpdateAddress(AddressDto addressDto)
+        {
+            var user = await signInManager.UserManager.GetUserByClaimsPrincipleWithAddress(User);
+
+            if (user.Address == null)
+            {
+                user.Address = addressDto.ToEntity();
+            }
+            else
+            {
+                user.Address.UpdateFromDto(addressDto);
+            }
+
+            var result = await signInManager.UserManager.UpdateAsync(user);
+
+            if (!result.Succeeded) return BadRequest("Problem updating user address");
+
+            return Ok(user.Address.ToDto());
         }
     }
 }
