@@ -1,0 +1,30 @@
+.empty-state-container {
+  max-width: 80rem; // Tailwind's max-w-screen-xl
+  margin: 8rem auto 0; // Tailwind's mx-auto and mt-32
+  padding: 2.5rem 1rem; // Tailwind's px-10 and py-4
+  background-color: #ffffff; // Tailwind's bg-white
+  border-radius: 0.5rem; // Tailwind's rounded-lg
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Similar shadow effect
+  width: 100%; // Tailwind's w-full
+
+  .empty-state-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0; // Tailwind's py-12
+    width: 100%;
+
+    .icon {
+      margin-bottom: 2rem; // Tailwind's mb-8
+      transform: scale(3);
+    }
+
+    .message {
+      color: #757575; // Tailwind's text-gray-600
+      font-size: 1.125rem; // Tailwind's text-lg
+      font-weight: 600; // Tailwind's font-semibold
+      margin-bottom: 1rem; // Tailwind's mb-4
+    }
+  }
+}
