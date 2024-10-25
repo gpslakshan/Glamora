@@ -1,0 +1,43 @@
+.login-card {
+  max-width: 32rem; // Tailwind's max-w-lg
+  margin: 8rem auto 0; // Tailwind's mx-auto and mt-32
+  padding: 2rem; // Tailwind's p-8
+  background-color: #ffffff; // Tailwind's bg-white
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem; // Optional rounded corners for a similar card effect
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Shadow effect to replicate mat-card elevation
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 1.5rem; // Tailwind's mb-6
+  }
+
+  .login-title {
+    font-size: 1.875rem; // Tailwind's text-3xl
+    font-weight: 600; // Tailwind's font-semibold
+    color: #3f51b5;
+  }
+
+  .input-field {
+    width: 100%; // Tailwind's w-full
+    margin-bottom: 1rem; // Tailwind's mb-4
+  }
+
+  .submit-button {
+    width: 100%; // Tailwind's w-full
+    padding: 0.5rem 0; // Tailwind's py-2
+    font-size: 1rem; // Optional standard font size for clarity
+    font-weight: 500; // Bold text for visibility
+    color: #ffffff; // Assuming button text is white for contrast
+    background-color: #3f51b5;
+    border: none;
+    border-radius: 0.25rem; // Optional small rounded corners
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken(#3f51b5, 10%); // Darker on hover
+    }
+  }
+}

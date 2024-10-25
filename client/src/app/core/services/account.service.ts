@@ -12,10 +12,13 @@ export class AccountService {
   baseUrl = environment.apiUrl;
   currentUser = signal<User | null>(null);
 
-  login(values: any): Observable<User> {
+  login(values: any): Observable<void> {
     let params = new HttpParams();
     params = params.append('useCookies', true);
-    return this.http.post<User>(`${this.baseUrl}/login`, values, { params });
+    return this.http.post<void>(`${this.baseUrl}/login`, values, {
+      params,
+      withCredentials: true,
+    });
   }
 
   register(values: any): Observable<void> {
@@ -23,13 +26,19 @@ export class AccountService {
   }
 
   getUserInfo(): void {
-    this.http.get<User>(`${this.baseUrl}/account/user-info`).subscribe({
-      next: (user) => this.currentUser.set(user),
-    });
+    this.http
+      .get<User>(`${this.baseUrl}/account/user-info`, { withCredentials: true })
+      .subscribe({
+        next: (user) => this.currentUser.set(user),
+      });
   }
 
   logOut(): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/account/logout`, {});
+    return this.http.post<void>(
+      `${this.baseUrl}/account/logout`,
+      {},
+      { withCredentials: true }
+    );
   }
 
   updateAddress(address: Address): Observable<Address> {
