@@ -40,4 +40,10 @@ export class AccountService {
   updateAddress(address: Address): Observable<Address> {
     return this.http.post<Address>(`${this.baseUrl}/account/address`, address);
   }
+
+  getAuthStatus() {
+    return this.http.get<{ isAuthenticated: boolean }>(
+      `${this.baseUrl}/account/auth-status`
+    );
+  }
 }
