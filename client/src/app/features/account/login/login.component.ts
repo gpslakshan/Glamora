@@ -33,7 +33,7 @@ export class LoginComponent {
   onSubmit(): void {
     this.accountService.login(this.loginForm.value).subscribe({
       next: () => {
-        this.accountService.getUserInfo();
+        this.accountService.getUserInfo().subscribe();
         this.router.navigateByUrl('/shop');
       },
     });
