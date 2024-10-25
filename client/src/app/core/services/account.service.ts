@@ -17,7 +17,6 @@ export class AccountService {
     params = params.append('useCookies', true);
     return this.http.post<void>(`${this.baseUrl}/login`, values, {
       params,
-      withCredentials: true,
     });
   }
 
@@ -26,24 +25,16 @@ export class AccountService {
   }
 
   getUserInfo(): Observable<User> {
-    return this.http
-      .get<User>(`${this.baseUrl}/account/user-info`, {
-        withCredentials: true,
+    return this.http.get<User>(`${this.baseUrl}/account/user-info`).pipe(
+      map((user) => {
+        this.currentUser.set(user);
+        return user;
       })
-      .pipe(
-        map((user) => {
-          this.currentUser.set(user);
-          return user;
-        })
-      );
+    );
   }
 
   logOut(): Observable<void> {
-    return this.http.post<void>(
-      `${this.baseUrl}/account/logout`,
-      {},
-      { withCredentials: true }
-    );
+    return this.http.post<void>(`${this.baseUrl}/account/logout`, {});
   }
 
   updateAddress(address: Address): Observable<Address> {
