@@ -1,1 +1,76 @@
-<p>register works!</p>
+<mat-card class="register-card">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="register-header">
+      <h1 class="register-title">Register</h1>
+    </div>
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>First Name</mat-label>
+      <input
+        formControlName="firstName"
+        type="text"
+        placeholder="John"
+        matInput
+      />
+      @if (registerForm.get('firstName')?.hasError('required')) {
+      <mat-error>Firstname is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Last Name</mat-label>
+      <input
+        formControlName="lastName"
+        type="text"
+        placeholder="Smith"
+        matInput
+      />
+      @if (registerForm.get('lastName')?.hasError('required')) {
+      <mat-error>Lastname is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Email address</mat-label>
+      <input
+        formControlName="email"
+        type="email"
+        placeholder="name@example.com"
+        matInput
+      />
+      @if (registerForm.get('email')?.hasError('required')) {
+      <mat-error>Email is required</mat-error>
+      } @if (registerForm.get('email')?.hasError('email')) {
+      <mat-error>Invalid email address</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Password</mat-label>
+      <input
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+        matInput
+      />
+      @if (registerForm.get('password')?.hasError('required')) {
+      <mat-error>Password is required</mat-error>
+      }
+    </mat-form-field>
+
+    @if (validationErrors) {
+    <div class="mb-3 p-4 bg-red-100 text-red-600">
+      <ul class="list-disc px-3">
+        @for (error of validationErrors; track $index) {
+        <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+    }
+
+    <button
+      mat-flat-button
+      type="submit"
+      [disabled]="registerForm.invalid"
+      class="submit-button"
+    >
+      Register
+    </button>
+  </form>
+</mat-card>

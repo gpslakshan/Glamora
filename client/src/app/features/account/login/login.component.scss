@@ -16,7 +16,7 @@
   .login-title {
     font-size: 1.875rem; // Tailwind's text-3xl
     font-weight: 600; // Tailwind's font-semibold
-    color: #3f51b5;
+    color: #005cbb;
   }
 
   .input-field {
@@ -27,17 +27,5 @@
   .submit-button {
     width: 100%; // Tailwind's w-full
     padding: 0.5rem 0; // Tailwind's py-2
-    font-size: 1rem; // Optional standard font size for clarity
-    font-weight: 500; // Bold text for visibility
-    color: #ffffff; // Assuming button text is white for contrast
-    background-color: #3f51b5;
-    border: none;
-    border-radius: 0.25rem; // Optional small rounded corners
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: darken(#3f51b5, 10%); // Darker on hover
-    }
   }
 }
