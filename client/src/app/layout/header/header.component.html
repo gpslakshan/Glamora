@@ -22,7 +22,10 @@
         <mat-icon>shopping_cart</mat-icon>
       </a>
       @if (accountService.currentUser()) {
-      <button mat-stroked-button (click)="logOut()">Logout</button>
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>arrow_drop_down</mat-icon>
+        <span>{{ accountService.currentUser()?.email }}</span>
+      </button>
       } @else {
       <button mat-stroked-button routerLink="/account/login">Login</button>
       <button mat-stroked-button routerLink="/account/register">
@@ -36,3 +39,19 @@
 @if (busyService.isLoading) {
 <mat-progress-bar mode="indeterminate" class="progress-bar" />
 }
+
+<mat-menu #menu="matMenu" class="px-5">
+  <button mat-menu-item routerLink="/cart">
+    <mat-icon>shopping_cart</mat-icon>
+    My Cart
+  </button>
+  <button mat-menu-item routerLink="/orders">
+    <mat-icon>history</mat-icon>
+    My Orders
+  </button>
+  <mat-divider />
+  <button mat-menu-item (click)="logOut()">
+    <mat-icon>logout</mat-icon>
+    Logout
+  </button>
+</mat-menu>

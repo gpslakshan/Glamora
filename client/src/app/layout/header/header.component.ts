@@ -7,6 +7,8 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { BusyService } from '../../core/services/busy.service';
 import { CartService } from '../../core/services/cart.service';
 import { AccountService } from '../../core/services/account.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +18,8 @@ import { AccountService } from '../../core/services/account.service';
     MatIconModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatMenuModule,
+    MatDividerModule,
     RouterLink,
     RouterLinkActive,
   ],
