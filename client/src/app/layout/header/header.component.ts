@@ -3,9 +3,10 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { BusyService } from '../../core/services/busy.service';
 import { CartService } from '../../core/services/cart.service';
+import { AccountService } from '../../core/services/account.service';
 
 @Component({
   selector: 'app-header',
@@ -24,4 +25,15 @@ import { CartService } from '../../core/services/cart.service';
 export class HeaderComponent {
   busyService = inject(BusyService);
   cartService = inject(CartService);
+  accountService = inject(AccountService);
+  private router = inject(Router);
+
+  logOut(): void {
+    this.accountService.logOut().subscribe({
+      next: () => {
+        this.accountService.currentUser.set(null);
+        this.router.navigateByUrl('/');
+      },
+    });
+  }
 }
