@@ -1,10 +1,6 @@
-.cart-container {
-  margin: 0 auto;
-  max-width: 1280px; // equivalent to Tailwind's max-w-screen-xl
-}
-
 .cart-content {
   display: flex;
+  width: 100%;
   align-items: flex-start;
   gap: 1.5rem; // equivalent to Tailwind's gap-6
   margin-top: 3rem; // equivalent to Tailwind's mt-12

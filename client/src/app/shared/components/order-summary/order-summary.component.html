@@ -25,10 +25,12 @@
       </dl>
     </div>
 
+    @if (location.path() !== '/checkout') {
     <div class="order-actions">
       <button routerLink="/checkout" mat-flat-button>Checkout</button>
       <button routerLink="/shop" mat-button>Continue Shopping</button>
     </div>
+    }
   </div>
 
   <div class="voucher-box">

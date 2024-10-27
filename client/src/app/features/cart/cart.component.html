@@ -1,15 +1,13 @@
 <section class="cart-section">
   @if (cartService.cart()?.items?.length! > 0) {
-  <div class="cart-container">
-    <div class="cart-content">
-      <div class="cart-items">
-        @for (item of cartService.cart()?.items; track item.productId) {
-        <app-cart-item [item]="item" />
-        }
-      </div>
-      <div class="order-summary">
-        <app-order-summary />
-      </div>
+  <div class="cart-content">
+    <div class="cart-items">
+      @for (item of cartService.cart()?.items; track item.productId) {
+      <app-cart-item [item]="item" />
+      }
+    </div>
+    <div class="order-summary">
+      <app-order-summary />
     </div>
   </div>
   } @else {
