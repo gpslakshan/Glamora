@@ -21,13 +21,20 @@ public class AppDbSeeder : IAppDbSeeder
                 _context.Products.AddRange(products);
                 await _context.SaveChangesAsync();
             }
+
+            if (!_context.DeliveryMethods.Any())
+            {
+                var deliveryMethods = GetDeliveryMethods();
+                _context.DeliveryMethods.AddRange(deliveryMethods);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 
     private IEnumerable<Product> GetProducts()
     {
-        List<Product> products = new List<Product>
-        {
+        List<Product> products =
+        [
             // src - https://www.maxfashion.com/ae/en/department/men (Max Fashion Middle East)
             new Product { Name = "Women's T-Shirt", Description = "Comfortable and breathable cotton t-shirt, perfect for casual wear during any season. Features a classic fit and a variety of colors to choose from.", Price = 19.99M, PictureUrl = "https://media.maxfashion.com/i/max/B24WCTFEKTRT122SGREENMEDIUM-B24WCTFEKTRT122S-MXSS24042924_01-2100.jpg?$prodimg-d-prt-4-2x$&$quality-retina$&fmt=auto&sm=c", Type = "Women", Brand = "H&M", QuantityInStock = 50 },
             new Product { Name = "Men's Jeans", Description = "Stylish slim-fit jeans made from high-quality denim. These jeans offer a modern look with excellent comfort and durability. Available in multiple washes.", Price = 49.99M, PictureUrl = "https://media.maxfashion.com/i/max/B24MDNMFEFJ302BLUEDARK-B24MDNMFEFJ302-MXSPR24020324_02-2100.jpg?$prodimg-d-prt-4-2x$&$quality-retina$&fmt=auto&sm=c", Type = "Men", Brand = "Levi's", QuantityInStock = 30 },
@@ -47,8 +54,21 @@ public class AppDbSeeder : IAppDbSeeder
             new Product { Name = "Women's Coat", Description = "Elegant coat made from high-quality materials. Provides warmth and style, making it perfect for both formal and casual occasions.", Price = 99.99M, PictureUrl = "https://media.maxfashion.com/i/max/B24WCTFSJKT305CREAMLIGHT-B24WCTFSJKT305-MXSS24010424_01-2100.jpg?$prodimg-d-prt-4-2x$&$quality-retina$&fmt=auto&sm=c", Type = "Women", Brand = "Calvin Klein", QuantityInStock = 5 },
             new Product { Name = "Men's Suit", Description = "Formal suit made from premium fabric. Offers a sharp and sophisticated look, perfect for business meetings and special occasions.", Price = 149.99M, PictureUrl = "https://media.maxfashion.com/i/max/B24MCSFEBDRSS103BROWNMEDIUM-B24MCSFEBDRSS103-MXSPR24041123-1_01-2100.jpg?$prodimg-d-prt-4-2x$&$quality-retina$&fmt=auto&sm=c", Type = "Men", Brand = "Ralph Lauren", QuantityInStock = 10 },
             new Product { Name = "Kids' Sweater", Description = "Warm and cozy sweater for kids, made from soft material. Features fun designs and colors, perfect for keeping your child warm in style.", Price = 14.99M, PictureUrl = "https://media.maxfashion.com/i/max/B24KBOFSBTSH607GREENLIGHT-B24KBOFSBTSH607-MXSPR24250324_01-2100.jpg?$prodimg-d-prt-4-2x$&$quality-retina$&fmt=auto&sm=c", Type = "Kids", Brand = "Disney", QuantityInStock = 25 },
-        };
+        ];
 
         return products;
+    }
+
+    private IEnumerable<DeliveryMethod> GetDeliveryMethods()
+    {
+        List<DeliveryMethod> deliveryMethods =
+        [
+            new DeliveryMethod { ShortName = "UPS1", Description = "Fastest delivery time", DeliveryTime = "1-2 Days", Price = 10 },
+            new DeliveryMethod { ShortName = "UPS2", Description = "Get it within 5 days", DeliveryTime = "2-5 Days", Price = 5 },
+            new DeliveryMethod { ShortName = "UPS3", Description = "Slower but cheap", DeliveryTime = "5-10 Days", Price = 2 },
+            new DeliveryMethod { ShortName = "FREE", Description = "Free! You get what you pay for", DeliveryTime = "1-2 Weeks", Price = 0 }
+        ];
+
+        return deliveryMethods;
     }
 }
