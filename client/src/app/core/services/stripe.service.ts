@@ -1,10 +1,16 @@
 import { inject, Injectable } from '@angular/core';
-import { loadStripe, Stripe, StripeElements } from '@stripe/stripe-js';
+import {
+  loadStripe,
+  Stripe,
+  StripeAddressElement,
+  StripeAddressElementOptions,
+  StripeElements,
+} from '@stripe/stripe-js';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { CartService } from './cart.service';
 import { Cart } from '../../shared/models/cart';
-import { firstValueFrom, map } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,16 +21,17 @@ export class StripeService {
   private baseUrl = environment.apiUrl;
   private cartService = inject(CartService);
   private elements?: StripeElements;
+  private addressElement?: StripeAddressElement;
 
   constructor() {
     this.stripePromise = loadStripe(environment.stripePublicKey);
   }
 
-  getStripeInstance() {
+  getStripeInstance(): Promise<Stripe | null> {
     return this.stripePromise;
   }
 
-  async initializeElements() {
+  async initializeElements(): Promise<StripeElements> {
     if (!this.elements) {
       const stripe = await this.getStripeInstance();
 
@@ -42,7 +49,23 @@ export class StripeService {
     return this.elements;
   }
 
-  createOrUpdatePaymentIntent() {
+  async createAddressElement(): Promise<StripeAddressElement> {
+    if (!this.addressElement) {
+      const elements = await this.initializeElements();
+      if (elements) {
+        const options: StripeAddressElementOptions = {
+          mode: 'shipping',
+        };
+        this.addressElement = elements.create('address', options);
+      } else {
+        throw new Error('Elements instance has not been loaded.');
+      }
+    }
+
+    return this.addressElement;
+  }
+
+  createOrUpdatePaymentIntent(): Observable<Cart> {
     const cart = this.cartService.cart();
 
     if (!cart) {
