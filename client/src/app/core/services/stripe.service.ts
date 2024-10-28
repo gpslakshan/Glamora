@@ -5,6 +5,7 @@ import {
   StripeAddressElement,
   StripeAddressElementOptions,
   StripeElements,
+  StripePaymentElement,
 } from '@stripe/stripe-js';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -24,6 +25,7 @@ export class StripeService {
   private accountService = inject(AccountService);
   private elements?: StripeElements;
   private addressElement?: StripeAddressElement;
+  private paymentElement?: StripePaymentElement;
 
   constructor() {
     this.stripePromise = loadStripe(environment.stripePublicKey);
@@ -86,6 +88,19 @@ export class StripeService {
     return this.addressElement;
   }
 
+  async createPaymentElement(): Promise<StripePaymentElement> {
+    if (!this.paymentElement) {
+      const elements = await this.initializeElements();
+      if (elements) {
+        this.paymentElement = elements.create('payment');
+      } else {
+        throw new Error('Elements instance has not been initialized');
+      }
+    }
+
+    return this.paymentElement;
+  }
+
   createOrUpdatePaymentIntent(): Observable<Cart> {
     const cart = this.cartService.cart();
 
@@ -104,5 +119,6 @@ export class StripeService {
   disposeElements(): void {
     this.elements = undefined;
     this.addressElement = undefined;
+    this.paymentElement = undefined;
   }
 }
