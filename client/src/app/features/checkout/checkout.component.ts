@@ -1,10 +1,15 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { OrderSummaryComponent } from '../../shared/components/order-summary/order-summary.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { StripeService } from '../../core/services/stripe.service';
-import { StripeAddressElement, StripePaymentElement } from '@stripe/stripe-js';
+import {
+  StripeAddressElement,
+  StripeAddressElementChangeEvent,
+  StripePaymentElement,
+  StripePaymentElementChangeEvent,
+} from '@stripe/stripe-js';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import {
   MatCheckboxChange,
@@ -43,17 +48,49 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   addressElement?: StripeAddressElement;
   paymentElement?: StripePaymentElement;
   saveAddress = false;
+  completionStatus = signal<{
+    address: boolean;
+    shipping: boolean;
+    payment: boolean;
+  }>({
+    address: false,
+    shipping: false,
+    payment: false,
+  });
 
   async ngOnInit(): Promise<void> {
     try {
       this.addressElement = await this.stripeService.createAddressElement();
       this.addressElement.mount('#address-element');
+      this.addressElement.on('change', this.handleAddressChange);
 
       this.paymentElement = await this.stripeService.createPaymentElement();
       this.paymentElement.mount('#payment-element');
+      this.paymentElement.on('change', this.handlePaymentChange);
     } catch (error: any) {
       this.snackbar.error(error.message);
     }
+  }
+
+  handleAddressChange = (event: StripeAddressElementChangeEvent) => {
+    this.completionStatus.update((state) => {
+      state.address = event.complete;
+      return state;
+    });
+  };
+
+  handlePaymentChange = (event: StripePaymentElementChangeEvent) => {
+    this.completionStatus.update((state) => {
+      state.payment = event.complete;
+      return state;
+    });
+  };
+
+  handleDeliveryChange(event: boolean) {
+    this.completionStatus.update((state) => {
+      state.shipping = event;
+      return state;
+    });
   }
 
   async onStepChange(event: StepperSelectionEvent) {
