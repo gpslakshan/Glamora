@@ -72,6 +72,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGroup("api").MapIdentityApi<AppUser>();
+app.MapGroup("api/identity").WithTags("Identity").MapIdentityApi<AppUser>();
 
 app.Run();

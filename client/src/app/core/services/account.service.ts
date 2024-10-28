@@ -15,7 +15,7 @@ export class AccountService {
   login(values: any): Observable<void> {
     let params = new HttpParams();
     params = params.append('useCookies', true);
-    return this.http.post<void>(`${this.baseUrl}/login`, values, {
+    return this.http.post<void>(`${this.baseUrl}/identity/login`, values, {
       params,
     });
   }
