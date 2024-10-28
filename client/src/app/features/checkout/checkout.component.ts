@@ -16,6 +16,7 @@ import {
   MatCheckboxChange,
   MatCheckboxModule,
 } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Address } from '../../shared/models/user';
 import { AccountService } from '../../core/services/account.service';
@@ -37,6 +38,7 @@ import { CurrencyPipe } from '@angular/common';
     CheckoutDeliveryComponent,
     CheckoutReviewComponent,
     CurrencyPipe,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
@@ -60,6 +62,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     payment: false,
   });
   confirmationToken?: ConfirmationToken;
+  isLoading = false;
 
   async ngOnInit(): Promise<void> {
     try {
@@ -155,6 +158,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   async confirmPayment(stepper: MatStepper) {
+    this.isLoading = true;
     try {
       if (this.confirmationToken) {
         const result = await this.stripeService.confirmPayment(
@@ -170,7 +174,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     } catch (error: any) {
       this.snackbar.error(error.message || 'Something went wrong!');
-      stepper.previous;
+      stepper.previous();
+    } finally {
+      this.isLoading = false;
     }
   }
 
