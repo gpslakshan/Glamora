@@ -1,0 +1,59 @@
+.checkout-success-section {
+  background-color: #ffffff;
+  padding: 4rem 0; // Equivalent to Tailwind's py-16
+
+  .content-container {
+    max-width: 40rem; // Tailwind's max-w-2xl
+    margin: 0 auto;
+    padding: 0 1rem; // Equivalent to Tailwind's px-4
+    text-align: left;
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 1.5rem; // Equivalent to text-2xl
+    margin-bottom: 0.5rem; // Equivalent to mb-2
+  }
+
+  .subtitle {
+    color: #6b7280; // Tailwind's text-gray-500
+    margin-bottom: 2rem; // Equivalent to mb-8
+
+    .order-number {
+      font-weight: 500; // Slightly bolder for emphasis
+    }
+  }
+
+  .order-summary {
+    margin-bottom: 2rem; // Equivalent to mb-8
+    padding: 1.5rem; // Equivalent to p-6
+    background-color: #f9fafb; // Tailwind's bg-gray-50
+    border: 1px solid #f3f4f6; // Tailwind's border-gray-100
+    border-radius: 0.5rem; // Equivalent to rounded-lg
+
+    .detail {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem; // Equivalent to gap-4
+      align-items: center;
+      margin-bottom: 0.5rem; // Space between rows
+
+      .label {
+        font-weight: 400;
+        color: #6b7280; // Tailwind's text-gray-500
+      }
+
+      .value {
+        font-weight: 500;
+        color: #111827; // Tailwind's text-gray-900
+        text-align: right;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem; // Equivalent to space-x-4
+  }
+}
