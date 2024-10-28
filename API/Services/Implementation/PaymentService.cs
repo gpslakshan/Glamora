@@ -58,7 +58,7 @@ public class PaymentService(
         {
             var options = new PaymentIntentCreateOptions
             {
-                Amount = (long)cart.Items.Sum(x => x.Quantity * (x.Price * 100)) + (long)shippingPrice,
+                Amount = (long)cart.Items.Sum(x => x.Quantity * (x.Price * 100)) + (long)(shippingPrice * 100),
                 Currency = "usd",
                 PaymentMethodTypes = ["card"]
             };
@@ -71,7 +71,7 @@ public class PaymentService(
         {
             var options = new PaymentIntentUpdateOptions
             {
-                Amount = (long)cart.Items.Sum(x => x.Quantity * (x.Price * 100)) + (long)shippingPrice,
+                Amount = (long)cart.Items.Sum(x => x.Quantity * (x.Price * 100)) + (long)(shippingPrice * 100),
             };
 
             intent = await service.UpdateAsync(cart.PaymentIntentId, options);

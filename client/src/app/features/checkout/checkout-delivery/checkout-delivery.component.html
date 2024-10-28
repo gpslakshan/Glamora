@@ -1,0 +1,24 @@
+<div class="checkout-delivery-container">
+  <mat-radio-group
+    [value]="cartService.selectedDeliveryMethod()?.id"
+    (change)="updateDeliveryMethod($event.value)"
+    class="delivery-methods"
+  >
+    @for (method of checkoutService.deliveryMethods; track method.id) {
+    <label class="delivery-option">
+      <mat-radio-button
+        class="radio-button"
+        [value]="method"
+        [checked]="cartService.selectedDeliveryMethod() === method"
+      >
+        <div class="delivery-details">
+          <strong
+            >{{ method.shortName }} - {{ method.price | currency }}</strong
+          >
+          <span class="description">{{ method.description }}</span>
+        </div>
+      </mat-radio-button>
+    </label>
+    }
+  </mat-radio-group>
+</div>

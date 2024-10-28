@@ -1,0 +1,43 @@
+.checkout-delivery-container {
+  width: 100%;
+
+  .delivery-methods {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // Two-column grid layout
+    gap: 1rem; // Equivalent to Tailwind's gap-4
+  }
+
+  .delivery-option {
+    padding: 0.75rem; // Equivalent to Tailwind's p-3
+    border: 1px solid #e5e7eb; // Tailwind's border-gray-200
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #ebf8ff; // Tailwind's hover:bg-blue-100
+    }
+
+    .radio-button {
+      width: 100%;
+      height: 100%;
+    }
+
+    .delivery-details {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+
+      strong {
+        font-weight: 600; // Slightly bold for visibility
+      }
+
+      .description {
+        font-size: 0.875rem; // Equivalent to Tailwind's text-sm
+        color: #4b5563; // Neutral gray color for secondary text
+      }
+    }
+  }
+}
