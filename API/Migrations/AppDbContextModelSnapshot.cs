@@ -55,7 +55,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Domain.AppUser", b =>
@@ -159,7 +159,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeliveryMethods");
+                    b.ToTable("DeliveryMethods", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Domain.OrderAggregate.Order", b =>
@@ -195,7 +195,7 @@ namespace API.Migrations
 
                     b.HasIndex("DeliveryMethodId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Domain.OrderAggregate.OrderItem", b =>
@@ -219,7 +219,7 @@ namespace API.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Domain.Product", b =>
@@ -258,7 +258,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -411,7 +411,7 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("API.Models.Domain.OrderAggregate.PaymentSummary", "PaymentSummary", b1 =>
+                    b.OwnsOne("API.Models.Domain.OrderAggregate.Order.PaymentSummary#API.Models.Domain.OrderAggregate.PaymentSummary", "PaymentSummary", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
@@ -431,13 +431,13 @@ namespace API.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("Orders", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
                         });
 
-                    b.OwnsOne("API.Models.Domain.OrderAggregate.ShippingAddress", "ShippingAddress", b1 =>
+                    b.OwnsOne("API.Models.Domain.OrderAggregate.Order.ShippingAddress#API.Models.Domain.OrderAggregate.ShippingAddress", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
@@ -471,7 +471,7 @@ namespace API.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("Orders", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
@@ -493,7 +493,7 @@ namespace API.Migrations
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsOne("API.Models.Domain.OrderAggregate.ProductItemOrdered", "ItemOrdered", b1 =>
+                    b.OwnsOne("API.Models.Domain.OrderAggregate.OrderItem.ItemOrdered#API.Models.Domain.OrderAggregate.ProductItemOrdered", "ItemOrdered", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
                                 .HasColumnType("int");
@@ -511,7 +511,7 @@ namespace API.Migrations
 
                             b1.HasKey("OrderItemId");
 
-                            b1.ToTable("OrderItems");
+                            b1.ToTable("OrderItems", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderItemId");

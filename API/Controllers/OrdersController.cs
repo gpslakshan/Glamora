@@ -74,7 +74,7 @@ public class OrdersController(
             OrderItems = items,
             DeliveryMethod = deliveryMethod,
             ShippingAddress = createOrderDto.ShippingAddress,
-            SubTotal = items.Sum(x => x.Price * x.Quantity) + deliveryMethod.Price,
+            SubTotal = items.Sum(x => x.Price * x.Quantity),
             PaymentSummary = createOrderDto.PaymentSummary,
             PaymentIntentId = cart.PaymentIntentId,
             BuyerEmail = buyerEmail
@@ -82,12 +82,23 @@ public class OrdersController(
 
         await ordersRepo.CreateOrderAsync(order);
 
-        return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
+        return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order.ToDto());
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<OrderDto>>> GetOrdersForUser()
+    {
+        var userEmail = User.GetEmail();
+        var orders = await ordersRepo.GetOrdersForUserAsync(userEmail);
+        var response = orders.Select(o => o.ToDto()).ToList();
+        return Ok(response);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetOrderById(int id)
+    public async Task<ActionResult<OrderDto>> GetOrderById(int id)
     {
+        var userEmail = User.GetEmail();
+
         var order = await ordersRepo.GetOrderByIdAsync(id);
 
         if (order == null)
@@ -95,8 +106,11 @@ public class OrdersController(
             return NotFound();
         }
 
-        // var response = MapToProductDto(product);
-        // return Ok(response);
-        return Ok(order);
+        if (order.BuyerEmail != userEmail)
+        {
+            return Forbid();
+        }
+
+        return Ok(order.ToDto());
     }
 }
