@@ -1,9 +1,12 @@
+using API.Extensions;
 using API.Models.Domain;
 using API.Models.Domain.OrderAggregate;
 using API.Repositories.Interfaces;
 using API.Services.Interfaces;
+using API.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Stripe;
 
 namespace API.Controllers
@@ -15,7 +18,8 @@ namespace API.Controllers
         IDeliveryMethodsRepository deliveryMethodsRepo,
         ILogger<PaymentsController> logger,
         IOrdersRepository ordersRepo,
-        IConfiguration config) : ControllerBase
+        IConfiguration config,
+        IHubContext<NotificationHub> hubContext) : ControllerBase
     {
         private readonly string _whSecret = config["StripeSettings:WhSecret"]!;
 
@@ -91,7 +95,12 @@ namespace API.Controllers
 
                 await ordersRepo.UpdateOrderAsync(order);
 
-                // TODO:: SignalR => Inform client through a notification
+                var connectionId = NotificationHub.GetConnectionIdByEmail(order.BuyerEmail);
+
+                if (!string.IsNullOrEmpty(connectionId))
+                {
+                    await hubContext.Clients.Client(connectionId).SendAsync("OrderCompleteNotification", order.ToDto());
+                }
             }
         }
 

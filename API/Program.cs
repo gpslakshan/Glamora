@@ -6,6 +6,7 @@ using API.Repositories.Implementation;
 using API.Repositories.Interfaces;
 using API.Services.Implementation;
 using API.Services.Interfaces;
+using API.SignalR;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
@@ -45,6 +46,7 @@ builder.Services.AddScoped<IDeliveryMethodsRepository, DeliveryMethodsRepository
 builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IAppDbSeeder, AppDbSeeder>();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -69,10 +71,14 @@ app.UseHttpsRedirection();
 
 app.UseCors("MyCors");
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.MapGroup("api/identity").WithTags("Identity").MapIdentityApi<AppUser>();
+
+app.MapHub<NotificationHub>("/hub/notifications");
 
 app.Run();
