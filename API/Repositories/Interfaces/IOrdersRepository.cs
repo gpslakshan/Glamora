@@ -7,4 +7,6 @@ public interface IOrdersRepository
     Task CreateOrderAsync(Order order);
     Task<IEnumerable<Order>> GetOrdersForUserAsync(string userEmail);
     Task<Order?> GetOrderByIdAsync(int id);
+    Task<Order?> GetOrderByPaymentIntentIdAsync(string paymentIntentId);
+    Task UpdateOrderAsync(Order order);
 }

@@ -21,6 +21,14 @@ public class OrdersRepository(AppDbContext dbContext) : IOrdersRepository
                     .FirstOrDefaultAsync(x => x.Id == id);
     }
 
+    public Task<Order?> GetOrderByPaymentIntentIdAsync(string paymentIntentId)
+    {
+        return dbContext.Orders
+                .Include(x => x.DeliveryMethod)
+                .Include(x => x.OrderItems)
+                .FirstOrDefaultAsync(x => x.PaymentIntentId == paymentIntentId);
+    }
+
     public async Task<IEnumerable<Order>> GetOrdersForUserAsync(string userEmail)
     {
         return await dbContext.Orders
@@ -29,5 +37,11 @@ public class OrdersRepository(AppDbContext dbContext) : IOrdersRepository
                     .Include(x => x.DeliveryMethod)
                     .Include(x => x.OrderItems)
                     .ToListAsync();
+    }
+
+    public async Task UpdateOrderAsync(Order order)
+    {
+        dbContext.Orders.Update(order);
+        await dbContext.SaveChangesAsync();
     }
 }
