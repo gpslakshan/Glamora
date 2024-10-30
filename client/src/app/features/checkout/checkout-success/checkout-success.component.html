@@ -1,36 +1,59 @@
-<section class="checkout-success-section">
+<section
+  *ngIf="signalrService.orderSignal() as order"
+  class="checkout-success-section"
+>
   <div class="content-container">
     <h2 class="title">Thanks for your fake order!</h2>
     <p class="subtitle">
-      Your order <span class="order-number">#42</span>
+      Your order <span class="order-number">{{ order.id }}</span>
       will never be processed as this is a fake shop. We'll not notify you once
       your order has not shipped.
     </p>
     <div class="order-summary">
       <dl class="detail">
         <dt class="label">Date</dt>
-        <dd class="value">1 Nov 2024</dd>
+        <dd class="value">{{ order.orderDate | date : "medium" }}</dd>
       </dl>
 
       <dl class="detail">
         <dt class="label">Payment method</dt>
-        <dd class="value">Visa</dd>
+        <dd class="value">{{ order.paymentSummary | paymentCard }}</dd>
       </dl>
 
       <dl class="detail">
         <dt class="label">Address</dt>
-        <dd class="value">Address goes here</dd>
+        <dd class="value">{{ order.shippingAddress | address }}</dd>
       </dl>
 
       <dl class="detail">
         <dt class="label">Amount</dt>
-        <dd class="value">$1000</dd>
+        <dd class="value">{{ order.total | currency }}</dd>
       </dl>
     </div>
 
     <div class="actions">
-      <button routerLink="/orders/42" mat-flat-button>View your order</button>
+      <button routerLink="/orders/{{ order.id }}" mat-flat-button>
+        View your order
+      </button>
       <button routerLink="/shop" mat-stroked-button>Continue shopping</button>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="!signalrService.orderSignal()" class="checkout-success-section">
+  <div class="mx-auto max-w-2xl px-4">
+    <h2 class="font-semibold text-2xl mb-2">
+      Order is processing... Please wait...
+    </h2>
+
+    <div
+      class="space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-6 mb-8"
+    >
+      <div class="flex flex-col justify-center items-center">
+        <mat-spinner diameter="30" />
+        <p class="text-xl">Loading order....</p>
+        <span>Your payment has been received. We are creating the order</span>
+      </div>
     </div>
   </div>
 </section>
