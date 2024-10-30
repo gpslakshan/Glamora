@@ -25,6 +25,8 @@ import { CheckoutDeliveryComponent } from './checkout-delivery/checkout-delivery
 import { CheckoutReviewComponent } from './checkout-review/checkout-review.component';
 import { CartService } from '../../core/services/cart.service';
 import { CurrencyPipe } from '@angular/common';
+import { CreateOrderDto, ShippingAddress } from '../../shared/models/order';
+import { OrderService } from '../../core/services/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -47,6 +49,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   private stripeService = inject(StripeService);
   private accountService = inject(AccountService);
   cartService = inject(CartService);
+  private orderService = inject(OrderService);
   private snackbar = inject(SnackbarService);
   private router = inject(Router);
   addressElement?: StripeAddressElement;
@@ -121,7 +124,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   async onStepChange(event: StepperSelectionEvent) {
     if (event.selectedIndex === 1) {
       if (this.saveAddress) {
-        const address = await this.getAddressFromStripeAddressElement();
+        const address = (await this.getAddressFromStripeAddress()) as Address;
         address && firstValueFrom(this.accountService.updateAddress(address));
       }
     }
@@ -135,12 +138,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async getAddressFromStripeAddressElement(): Promise<Address | null> {
+  private async getAddressFromStripeAddress(): Promise<
+    Address | ShippingAddress | null
+  > {
     const result = await this.addressElement?.getValue();
     const address = result?.value.address;
 
     if (address) {
       return {
+        name: result.value.name,
         line1: address.line1,
         line2: address.line2 || undefined,
         city: address.city,
@@ -164,12 +170,23 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         const result = await this.stripeService.confirmPayment(
           this.confirmationToken
         );
-        if (result.error) {
-          throw new Error(result.error.message);
+
+        if (result.paymentIntent?.status === 'succeeded') {
+          const orderToCreate = await this.createOrderModel();
+          const order = await firstValueFrom(
+            this.orderService.createOrder(orderToCreate)
+          );
+          if (order) {
+            this.cartService.deleteCart();
+            this.cartService.selectedDeliveryMethod.set(null);
+            this.router.navigateByUrl('/checkout/success');
+          } else {
+            throw new Error('Order creation failed'); // backend error -> However the user was charged for the order by Stripe ->> This is something we need to think about on how to handle???
+          }
+        } else if (result.error) {
+          throw new Error(result.error.message); // stripe error
         } else {
-          this.cartService.deleteCart();
-          this.cartService.selectedDeliveryMethod.set(null);
-          this.router.navigateByUrl('/checkout/success');
+          throw new Error('Something went wrong');
         }
       }
     } catch (error: any) {
@@ -178,6 +195,31 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  private async createOrderModel(): Promise<CreateOrderDto> {
+    const cart = this.cartService.cart();
+    const shippingAddress =
+      (await this.getAddressFromStripeAddress()) as ShippingAddress;
+    const card = this.confirmationToken?.payment_method_preview.card;
+
+    if (!cart?.id || !cart.deliveryMethodId || !card || !shippingAddress) {
+      throw new Error('Problem creating order');
+    }
+
+    const orderToCreate: CreateOrderDto = {
+      cartId: cart.id,
+      paymentSummary: {
+        last4: +card.last4,
+        brand: card.brand,
+        expMonth: card.exp_month,
+        expYear: card.exp_year,
+      },
+      deliveryMethodId: cart.deliveryMethodId,
+      shippingAddress,
+    };
+
+    return orderToCreate;
   }
 
   ngOnDestroy(): void {
