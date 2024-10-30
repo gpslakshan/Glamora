@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class OrderService {
   private baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
+  isOrderCompleted = false;
 
   createOrder(orderToCreate: CreateOrderDto): Observable<Order> {
     return this.http.post<Order>(`${this.baseUrl}/orders`, orderToCreate);
