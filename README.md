@@ -1,5 +1,7 @@
 # GLAMORA (E-commerce Application)
 
+![E-Commerce store](https://github.com/gpslakshan/Glamora/blob/main/client/public/thumbnail.png?raw=true)
+
 This project is a full-stack e-commerce application built using the following technologies:
 
 - **Frontend**: Angular, Angular Material, and TailwindCSS
